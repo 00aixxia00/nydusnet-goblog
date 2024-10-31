@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -53,7 +52,9 @@ func PostHandler(sl SlugReader) http.HandlerFunc {
 		}
 		mdRenderer := goldmark.New(
 			goldmark.WithExtensions(
-				highlighting.Highlighting,
+				highlighting.NewHighlighting(
+					highlighting.WithStyle("dracula"),
+				),
 			),
 		)
 
@@ -63,6 +64,5 @@ func PostHandler(sl SlugReader) http.HandlerFunc {
 			panic(err)
 		}
 		io.Copy(w, &buf)
-		fmt.Fprint(w, postMarkdown)
 	}
 }
