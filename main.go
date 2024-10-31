@@ -43,6 +43,14 @@ func (fr FileReader) Read(slug string) (string, error) {
 }
 
 func PostHandler(sl SlugReader) http.HandlerFunc {
+	mdRenderer := goldmark.New(
+		goldmark.WithExtensions(
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("dracula"),
+			),
+		),
+	)
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		slug := r.PathValue("slug")
 		postMarkdown, err := sl.Read(slug)
@@ -50,13 +58,6 @@ func PostHandler(sl SlugReader) http.HandlerFunc {
 			http.Error(w, "Post not found", http.StatusNotFound)
 			return
 		}
-		mdRenderer := goldmark.New(
-			goldmark.WithExtensions(
-				highlighting.NewHighlighting(
-					highlighting.WithStyle("dracula"),
-				),
-			),
-		)
 
 		var buf bytes.Buffer
 		err = mdRenderer.Convert([]byte(postMarkdown), &buf)
