@@ -9,5 +9,4 @@ type Reader interface {
 ```
 
 ::: This is the title of the aside
-This is some extra side content that is relevant, but not necessary to enjoy the blog post.
-:::
+This is some extra side content that is relevant, but not necessary to enjoy the blog post.:::

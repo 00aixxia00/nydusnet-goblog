@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
 )
 
 func main() {
@@ -50,8 +51,15 @@ func PostHandler(sl SlugReader) http.HandlerFunc {
 			http.Error(w, "Post not found", http.StatusNotFound)
 			return
 		}
+		mdRenderer := goldmark.New(
+			goldmark.WithExtensions(
+				highlighting.Highlighting,
+			),
+		)
+
 		var buf bytes.Buffer
-		if err := goldmark.Convert([]byte(postMarkdown), &buf); err != nil {
+		err = mdRenderer.Convert([]byte(postMarkdown), &buf)
+		if err != nil {
 			panic(err)
 		}
 		io.Copy(w, &buf)
