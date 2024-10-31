@@ -1,11 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/yuin/goldmark"
 )
 
 func main() {
@@ -47,6 +50,11 @@ func PostHandler(sl SlugReader) http.HandlerFunc {
 			http.Error(w, "Post not found", http.StatusNotFound)
 			return
 		}
+		var buf bytes.Buffer
+		if err := goldmark.Convert([]byte(postMarkdown), &buf); err != nil {
+			panic(err)
+		}
+		io.Copy(w, &buf)
 		fmt.Fprint(w, postMarkdown)
 	}
 }
