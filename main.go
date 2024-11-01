@@ -14,7 +14,7 @@ import (
 
 func main() {
 	mux := http.NewServeMux()
-	postTemplate := template.Must(template.ParseFiles("post.html"))
+	postTemplate := template.Must(template.ParseFiles("post.gohtml"))
 
 	mux.HandleFunc("GET /posts/{slug}", PostHandler(FileReader{}, postTemplate))
 
