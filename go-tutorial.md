@@ -84,5 +84,13 @@ better ... it's gonna be your BF
 
 
 
+### Classes?
+We do not have classes! No OO!
+We got the base Go Types like string, integer, float, map, array and we want to "extend" a base type and add some functionality to it. 
+Tell Go we want to create an array of strings and add a bunch of functions specifically made to work with it.
+Afunction with a receiver is like a "method" - a function that belongs to an "instance"
+
 # Useful Repo
 - https://github.com/yuin/goldmark
+
+
